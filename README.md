@@ -1,7 +1,6 @@
 # microblog
 a microblog developing using flask
 
-<br>
 to-do list:
 -----------
 - User authentication system.
