@@ -1,7 +1,8 @@
 # microblog
 a microblog developing using flask
 
-# to-do:
-- user authentication system.
-- OAuth authentication
-- Use Blueprint features to reconstruct.
+to-do list:
+-----------
+- User authentication system.
+- Add OAuth authentication.
+- Using Blueprint features to reconstruct.
