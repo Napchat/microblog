@@ -11,7 +11,7 @@ class User(db.Model):
 		return True
 
 	@property
-	def is_activa(self):
+	def is_active(self):
 		return True
 
 	@property
@@ -25,9 +25,9 @@ class User(db.Model):
 			return str(self.id)
 
 	def __repr__(self):
-	'''This method tells Python how to print objects of
-	this class
-	'''
+		'''This method tells Python how to print objects of
+		this class.
+		'''
 		return '<User %r>' % (self.nickname)
 
 class Post(db.Model):

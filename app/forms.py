@@ -1,8 +1,8 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField
 from wtforms.validators import DataRequired
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
 	#: the DataRequired import is a validator, a function that
 	#: can be attached to a field to perform validation on the
 	#: data submitted by the user. The DataRequired validator
