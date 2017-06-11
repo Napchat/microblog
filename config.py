@@ -12,8 +12,7 @@ WTF_CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
 OPENID_PROVIDERS = [
-    {'name': 'OpenID', 'url': 'http://openid.org.cn'},
-    {'name': 'Yahoo', 'url': 'https://me.yahoo.com'}
+    {'name': 'OpenID', 'url': 'http://<username>.openid.org.cn'},
 ]
 
 basedir = os.path.abspath(os.path.dirname(__file__))
