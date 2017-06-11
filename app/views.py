@@ -6,13 +6,16 @@ from app import app, db, lm, oid
 from .forms import LoginForm
 from .models import User
 
+@app.before_request
+def before_request():
+	g.user = current_user
+
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
-	#: fake user
-	user = {'nickname': 'Miguel'}
+	user = g.user
 
-	#: fake array of posts
 	posts = [
 		{
 			'author': {'nickname': 'John'},
@@ -37,7 +40,7 @@ def login():
 	'''
 
 	#: flask.g object stores and shares data through the life of a appcontext.
-	if g.user is not None and g.user.isauthenticated:
+	if g.user is not None and g.user.is_authenticated:
 		return redirect(url_for('index'))
 	form = LoginForm()
 
@@ -59,6 +62,12 @@ def login():
 						   form=form,
 						   providers=app.config['OPENID_PROVIDERS'])
 
+@app.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	return redirect(url_for('index'))
+
 @lm.user_loader
 def load_user(id):
 	return User.query.get(int(id))
@@ -70,7 +79,7 @@ def after_login(resp):
 		flash('Invalid login. Please try again.')
 		return redirect(url_for('login'))
 
-	user = User.query.fiter_by(email=resp.eamil).first()
+	user = User.query.filter_by(email=resp.email).first()
 	if user is None:
 		nickname = resp.nickname
 		if nickname is None or nickname == '':

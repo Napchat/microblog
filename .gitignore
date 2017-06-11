@@ -28,6 +28,7 @@ wheels/
 *.egg
 *.db
 db_repository/
+tmp/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
