@@ -2,13 +2,13 @@
 #!flask/bin/python3
 import os
 
-#: for the cross-site request forgery prevention
+# for the cross-site request forgery prevention
 WTF_CSRF_ENABLED = True
 
-#: this is needed when CSRF is enabled, it is
-#: used to create a cryptographic token that is
-#: used to validate a form. Make sure to set the
-#: secret key to something that is difficult to guess.
+# this is needed when CSRF is enabled, it is
+# used to create a cryptographic token that is
+# used to validate a form. Make sure to set the
+# secret key to something that is difficult to guess.
 SECRET_KEY = 'you-will-never-guess'
 
 OPENID_PROVIDERS = [
@@ -17,17 +17,17 @@ OPENID_PROVIDERS = [
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-#: path of our database
+# path of our database
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
-#: the folder where we will store our migrate data files
+# the folder where we will store our migrate data files
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
-#: mail server settings
+# mail server settings
 MAIL_SERVER = 'localhost'
 MAIL_PORT = 25
 MAIL_USERNAME = None
 MAIL_PASSWORD = None
 
-#: administrator list
+# administrator list
 ADMINS = ['you@example.com']
