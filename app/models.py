@@ -114,7 +114,12 @@ class User(db.Model):
             followers.c.followed_id==user.id).count() > 0
 
     def followed_posts(self):
-        return Post.query.join(followers, (followers.c.followed_id==Post.user_id)), \
+        '''Return a query object including posts of the users that you have followed.
+        It is always a good idea to return query object instead of results, because
+        that gives the caller the choice of adding more clauses to the query before
+        it is execeted.
+        '''
+        return Post.query.join(followers, (followers.c.followed_id==Post.user_id)).\
                     filter(followers.c.follower_id==self.id).order_by(Post.timestamp.desc())
 
 class Post(db.Model):
