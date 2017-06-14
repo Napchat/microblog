@@ -31,3 +31,11 @@ MAIL_PASSWORD = None
 
 # administrator list
 ADMINS = ['you@example.com']
+
+# pagenation
+POSTS_PER_PAGE = 3
+
+# the name of the full text search database
+WHOOSH_BASE = os.path.join(basedir, 'search.db')
+
+MAX_SEARCH_RESULTS = 50

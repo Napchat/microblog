@@ -29,3 +29,9 @@ class EditForm(FlaskForm):
                                         Please choose another one.')
             return False
         return True
+
+class PostForm(FlaskForm):
+    post = StringField('post', validators=[DataRequired()])
+
+class SearchForm(FlaskForm):
+    search = StringField('search', validators=[DataRequired()])

@@ -1,6 +1,9 @@
 from hashlib import md5
+import sys
 
-from app import db
+import flask_whooshalchemy as whooshalchemy
+
+from app import db, app
 
 '''The models.py defines our models related to tables
 in database.
@@ -39,9 +42,8 @@ class User(db.Model):
     # :arg: ``lazy`` is similiar to the parameter of the same name in the 
     # ``backref``, but this one applies to the regular query instead of the 
     # back reference.
-    # u1关注u2, 那么u1就有followed属性(followers表中的follower_id设置为u1的id),
-    # u2就有followers属性了(followers表中的followed_id设置为u2的id). 反之亦然
-    # 最终, 每个user都有followed和followers两个属性了
+    # u1关注u2, 那么u1就有followed属性(followers表中的follower_id设置为u1的id, 
+    # followed_id设置为u2的id). 
     followed = db.relationship('User',
                                secondary=followers,
                                primaryjoin=(followers.c.follower_id==id),
@@ -110,8 +112,7 @@ class User(db.Model):
 
     def is_following(self, user):
         '''Check if you followed the user.'''
-        return self.followed.filter(
-            followers.c.followed_id==user.id).count() > 0
+        return self.followed.filter(followers.c.followed_id==user.id).count() > 0
 
     def followed_posts(self):
         '''Return a query object including posts of the users that you have followed.
@@ -119,11 +120,16 @@ class User(db.Model):
         that gives the caller the choice of adding more clauses to the query before
         it is execeted.
         '''
-        return Post.query.join(followers, (followers.c.followed_id==Post.user_id)).\
-                    filter(followers.c.follower_id==self.id).order_by(Post.timestamp.desc())
+        return Post.query.join(followers, (followers.c.followed_id==Post.user_id)). \
+                               filter(followers.c.follower_id==self.id).order_by(Post.timestamp.desc())
 
 class Post(db.Model):
-    '''pass'''
+    '''The Post model'''
+
+    # It is an array with all the database fields that will be in the searchable
+    # index.
+    __searchable__ = ['body']
+
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime)
@@ -132,3 +138,6 @@ class Post(db.Model):
     def __repr__(self):
         '''pass'''
         return '<Post %r>' % (self.body)
+
+# To initialize the full text for models.
+whooshalchemy.whoosh_index(app, Post)
