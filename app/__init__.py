@@ -1,5 +1,29 @@
 # -*- coding: utf-8 -*-
 #!flask/bin/python3
+
+'''
+Microblog here!
+~~~~~~~~~~~~~~~
+
+Initialization of our app, database, loginmanager, openid, mail.....
+
+microblog is used for me learning flask, it has rich features:
+1. User management, including managing logins, sessions, user roles, 
+   profiles and user avatars.
+2. Database management, including migration handling.
+3. Web form support, including field validation.
+4. Pagination of long lists of items.
+5. Full text search.
+6. Email notifications to users.
+7. HTML templates.
+8. Support for multiple languages.
+9. Caching and other performance optimizations.
+10. Debugging techniques for development and production servers.
+11. Installation on a production server.
+
+Hope for enjoying using this little blog.
+'''
+
 import os
 
 from flask import Flask

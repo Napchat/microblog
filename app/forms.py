@@ -1,3 +1,12 @@
+'''
+app.forms
+~~~~~~~~~
+
+Forms we need to use when posting datas in our website.
+
+flask_wtf.Form is still useable, but FlaskForm is suggested.
+'''
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length

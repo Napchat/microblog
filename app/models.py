@@ -1,13 +1,16 @@
+'''
+app.models
+~~~~~~~~~~
+
+It defines our models related to tables in database.
+'''
+
 from hashlib import md5
 import sys
 
 import flask_whooshalchemy as whooshalchemy
 
 from app import db, app
-
-'''The models.py defines our models related to tables
-in database.
-'''
 
 followers = db.Table('followers', 
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),

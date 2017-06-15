@@ -1,5 +1,15 @@
 # -*- coding: utf-8 -*-
 #!flask/bin/python3
+
+'''
+app.views
+~~~~~~~~~
+
+view functions associated with every URLs of our web App
+
+And I am going to modify it with blueprint feature of Flask.
+'''
+
 from datetime import datetime
 
 from flask import render_template, flash, redirect, session, url_for, request, g
@@ -13,6 +23,7 @@ from .emails import follower_notification
 
 @app.before_request
 def before_request():
+    '''Run before each request.'''
     g.user = current_user
     if g.user.is_authenticated:
         g.user.last_seen = datetime.utcnow()
