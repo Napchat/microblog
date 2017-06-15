@@ -172,6 +172,7 @@ def follow(nickname):
     db.session.add(u)
     db.session.commit()
     flash('You are now following ' + nickname + '!')
+    follower_notification(user, g.user)
     return redirect(url_for('user', nickname=nickname))
 
 @app.route('/unfollow/<nickname>')
@@ -190,6 +191,7 @@ def unfollow(nickname):
         return redirect(url_for('user', nickname=nickname))
     db.session.add(u)
     db.session.commit()
+    follower_notification(user, g.user)
     flash('You have stopped following ' + nickname + '.')
     return redirect(url_for('user', nickname=nickname))
 
@@ -207,11 +209,3 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results)
-
-@app.route('/follow/<nickname>')
-@login_required
-def follow(nickaname):
-    user = User.query.filter_by(nickname=nickname).first()
-
-    follower_notification(user, g.user)
-    return redirect(url_for('user', nickname=nickname))

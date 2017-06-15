@@ -7,6 +7,11 @@
   <tr valign='top'>
     <td><img src='{{ follower.avatar(50) }}'></td>
     <td>
+      <!--argument `_external`: By default, the `url_for('index')` will be `/index`
+      while in this case we want http://localhost:5000/index. In an email there
+      is no domain context, so we have to force fully quelified URLs that include
+      the domain, and the `_external` argument is just for that.    
+      -->
       <a href="{{ url_for('user', nickname=follower.nickname, _external=True) }}">
       {{ follower.nickname }}
       </a>

@@ -5,7 +5,7 @@ from config import ADMINS
 from app import mail
 
 def send_email(subject, sender, recipients, text_body, html_body):
-    msg = Message(subject, sender=sender, rencipients=recipients)
+    msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     msg.html = html_body
     mail.send(msg)
@@ -15,6 +15,6 @@ def follower_notification(followed, follower):
                ADMINS[0],
                [followed.email],
                render_template('follower_email.txt',
-                               user=followed, followed=follower),
+                               user=followed, follower=follower),
                render_template('follower_email.html',
-                                user=followed, follower=follower))
+                               user=followed, follower=follower))
