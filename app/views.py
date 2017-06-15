@@ -9,6 +9,7 @@ from app import app, db, lm, oid
 from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
+from .emails import follower_notification
 
 @app.before_request
 def before_request():
@@ -206,3 +207,11 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results)
+
+@app.route('/follow/<nickname>')
+@login_required
+def follow(nickaname):
+    user = User.query.filter_by(nickname=nickname).first()
+
+    follower_notification(user, g.user)
+    return redirect(url_for('user', nickname=nickname))
