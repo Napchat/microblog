@@ -40,7 +40,7 @@ class EditForm(FlaskForm):
         return True
 
 class PostForm(FlaskForm):
-    post = StringField('post', validators=[DataRequired()])
+    post = TextAreaField('post', validators=[DataRequired()])
 
 class SearchForm(FlaskForm):
     search = StringField('search', validators=[DataRequired()])
