@@ -35,9 +35,15 @@ MAIL_USE_SSL = True
 ADMINS = ['wozhendeaiwoa@gmail.com']
 
 # pagenation
-POSTS_PER_PAGE = 3
+POSTS_PER_PAGE = 10
 
 # the name of the full text search database
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
 
 MAX_SEARCH_RESULTS = 50
+
+# available languages
+LANGUAGES = {
+    'en': 'English',
+    'es': 'Español'
+}

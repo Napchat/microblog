@@ -10,6 +10,9 @@ flask_wtf.Form is still useable, but FlaskForm is suggested.
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length
+from flask_babel import gettext
+
+from .models import User
 
 class LoginForm(FlaskForm):
     # the DataRequired import is a validator, a function that
@@ -32,15 +35,20 @@ class EditForm(FlaskForm):
             return False
         if self.nickname.data == self.original_nickname:
             return True
+        if self.nickname.data != User.make_valid_nickname(self.nickname.data):
+            self.nickname.errors.append(
+                gettext('This nickname has invalid characters. \
+                Please use letter, numbers, dots and underscores only.')
+            )
         user = User.query.filter_by(nickname=self.nickname.data).first()
-        if user != None:
-            self.nickname.errors.append('This nickname is already in use. \
-                                        Please choose another one.')
+        if user is not None:
+            self.nickname.errors.append(gettext('This nickname is already in use. \
+                                        Please choose another one.'))
             return False
         return True
 
 class PostForm(FlaskForm):
-    post = TextAreaField('post', validators=[DataRequired()])
+    post = StringField('post', validators=[DataRequired()])
 
 class SearchForm(FlaskForm):
     search = StringField('search', validators=[DataRequired()])

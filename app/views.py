@@ -14,11 +14,12 @@ from datetime import datetime
 
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_babel import gettext
 
-from app import app, db, lm, oid
+from app import app, db, lm, oid, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
-from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES
 from .emails import follower_notification
 
 @app.before_request
@@ -63,12 +64,12 @@ def index(page=1):
     return render_template('index.html', title='Home',
                            form=form, posts=posts)
 
+# @oid.loginhandler decorator tells Flask_OpenID that
+# this is our login view function.
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
-    '''@oid.loginhandler decorator tells Flask_OpenID that
-    this is our login view function.
-    '''
+    ''''''
 
     # flask.g object stores and shares data through the life of a appcontext.
     if g.user is not None and g.user.is_authenticated:
@@ -120,7 +121,7 @@ def load_user(id):
 def after_login(resp):
     '''if authentication is successful, this method ia called.'''
     if resp.email is None or resp.email == '':
-        flash('Invalid login. Please try again.')
+        flash(gettext('Invalid login. Please try again.'))
         return redirect(url_for('login'))
 
     user = User.query.filter_by(email=resp.email).first()
@@ -128,7 +129,8 @@ def after_login(resp):
         nickname = resp.nickname
         if nickname is None or nickname == '':
             nickname = resp.email.split('@')[0]
-        nicknam = User.make_unique_nickname(nickname)
+        nickname = User.make_valid_nickname(nickname)
+        nickname = User.make_unique_nickname(nickname)
         user = User(nickname=nickname, email=resp.email)
         db.session.add(user)
         db.session.commit()
@@ -219,3 +221,13 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results)
+
+# the function that is marked with the ``localeselector`` decorator will be
+# called before each request to give us a chance to choose the language to use
+# when producing its response.
+@babel.localeselector
+def get_locale():
+    '''Read the Accept-Langusges header sent by the browser in the HTTP request
+    and find the best matching langusge that we support.
+    '''
+    return request.accept_languages.best_match(LANGUAGES.keys())

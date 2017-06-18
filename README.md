@@ -13,9 +13,9 @@ to-do list:
 extensions:
 -----------------------
 1. Flask-WhooshAlchemy: It integrates a Whoosh database with Flask_SQLAlchemy models, we use the extension to implement our text searching.
-2. Flask-WTF: 
-3. Flask-Login:
-4. Flask-OpenID:
-5. sqlalchemy-migrate:
-6. Flask-Babel:
+2. Flask-WTF: Forms
+3. Flask-Login: Login sys
+4. Flask-OpenID: OpenID server
+5. sqlalchemy-migrate: database migration 
+6. Flask-Babel: l18n and L10n, to translate application into different language
 7. coverage:

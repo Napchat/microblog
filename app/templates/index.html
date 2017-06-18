@@ -1,37 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>MySpace</h2>
+  <h2>{{ _('MySpace') }}</h2>
 	<hr>
   {% for post in posts.items %}
 	  {% include 'post.html' %}
   {% endfor %}
 	<br>
 	{% if posts.has_prev %}
-	  <a href="{{ url_for('index', page=posts.prev_num) }}">&lt;&lt; Newer posts</a>
+	  <a href="{{ url_for('index', page=posts.prev_num) }}">{{ _('&lt;&lt; Newer posts') }}</a>
 	{% else %}
-	  &lt;&lt; Newer posts
+	  {{ _('&lt;&lt; Newer posts') }}
 	{% endif %} |
 	{% if posts.has_next %}
-	  <a href="{{ url_for('index', page=posts.next_num) }}">Older posts &gt;&gt;</a>
+	  <a href="{{ url_for('index', page=posts.next_num) }}">{{ _('Older posts &gt;&gt;') }}</a>
 	{% else %}
-	  Older posts &gt;&gt;
+	  {{ _('Older posts &gt;&gt;') }}
 	{% endif %}
 	<hr>
 	<form action='' method='post' name='post'>
 		<fieldset>
 			{{ form.hidden_tag() }}
-					Say something:<br>
-					<br>
-					<div class='row'>
-				  	<div class='span2.5'>{{ form.post(size=30, maxlength=140) }}</div><br>
-					  <div class='span1'><button type='submit' class='btn btn-primary'>Post</button></div>
-					</div>
-					{% for error in form.post.errors %}
-						<div class='alert'>
-					    <span style='color: red;'>[{{ error }}]</span>
-						</div>
-					{% endfor %}
+			<div class='row'>
+				<div class='span2.5'>{{ _('Say something:') }}</div>
+				<div class='span2.5'>{{ form.post(size=30, maxlength=140) }}</div> <!--  -->
+				<div class='span1'><button type='submit' class='btn btn-primary'>Post</button></div>
+		  </div>
+			{% for error in form.post.errors %}
+				<div class='alert'>
+					<span style='color: red;'>[{{ error }}]</span>
+				</div>
+			{% endfor %}
 		</fieldset>
 	</form>
 {% endblock %}

@@ -19,10 +19,10 @@
 		<form action='' method='post' name='login'>
 			{{ form.hidden_tag() }}
 			<fieldset>
-				<h1>Sign In</h1>
+				<h1>{{ _('Sign In') }}</h1>
 				<hr>
 				<p>
-					please enter your OpenID:
+					{{ _('please enter your OpenID:') }}
 					<br>
 					<br>
 					{{ form.openid(size=80) }}
@@ -35,10 +35,10 @@
 					{% endfor %}
 				</p>
 				<label class='checkbox'>
-					{{ form.remember_me }} Remember Me
+					{{ form.remember_me }} {{ _('Remember Me') }}
 				</label>
 				<br>
-				<button type='submit' class='btn btn-inverse'>Sign In</button>
+				<button type='submit' class='btn btn-inverse'>{{ _('Sign In') }}</button>
 			</fieldset>
 		</form>
 	</div>
