@@ -19,3 +19,7 @@ extensions:
 5. sqlalchemy-migrate: database migration 
 6. Flask-Babel: l18n and L10n, to translate application into different language
 7. coverage:
+8. guess-language: for client-server translating function
+9. Flask-Mail:
+10. Flask-SQLAlchemy:
+11. flipflop:

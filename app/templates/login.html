@@ -16,30 +16,36 @@
   </script>
 
   <div class='container'>
-		<form action='' method='post' name='login'>
-			{{ form.hidden_tag() }}
-			<fieldset>
-				<h1>{{ _('Sign In') }}</h1>
-				<hr>
-				<p>
-					{{ _('please enter your OpenID:') }}
+	  <div class='row'>
+	    <div class='span3'>
+			<form action='' method='post' name='login'>
+				{{ form.hidden_tag() }}
+				<fieldset>
+					<h1>{{ _('Sign In') }}</h1>
+					<hr>
+					<p>
+						{{ _('please enter your OpenID:') }}
+						<br>
+						<br>
+						{{ form.openid(size=80) }}
+						<br>
+						{% for error in form.openid.errors %}
+							<span style='color: red;'>[{{ error }}]</span>
+						{% endfor %}
+						{% for pr in providers %}
+							<a href="javascript:set_openid('{{ pr.url }}', '{{ pr.name }}');" class='btn disabled'>{{ pr.name }}</a>
+						{% endfor %}
+					</p>
+					<label class='checkbox'>
+						{{ form.remember_me }} {{ _('Remember Me') }}
+					</label>
 					<br>
-					<br>
-					{{ form.openid(size=80) }}
-					<br>
-					{% for error in form.openid.errors %}
-						<span style='color: red;'>[{{ error }}]</span>
-					{% endfor %}
-					{% for pr in providers %}
-						<a href="javascript:set_openid('{{ pr.url }}', '{{ pr.name }}');" class='btn disabled'>{{ pr.name }}</a>
-					{% endfor %}
-				</p>
-				<label class='checkbox'>
-					{{ form.remember_me }} {{ _('Remember Me') }}
-				</label>
-				<br>
-				<button type='submit' class='btn btn-inverse'>{{ _('Sign In') }}</button>
-			</fieldset>
-		</form>
+					<button type='submit' class='btn btn-inverse'>{{ _('Sign In') }}</button>
+				</fieldset>
+			</form>
+	    </div>
+		<div class='span9'>
+			<img src='/static/img/index2.jpg'>
+		</div>
 	</div>
 {% endblock %}

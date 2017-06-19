@@ -15,6 +15,7 @@ from datetime import datetime
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_babel import gettext
+from guess_language import guessLanguage
 
 from app import app, db, lm, oid, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
@@ -51,10 +52,14 @@ def before_request():
 def index(page=1):
     form = PostForm()
     if form.validate_on_submit():
+        language = guessLanguage(form.post.data)
+        if language == 'UNKNOWN' or len(language) > 5:
+            language = ''
         post = Post(
             body=form.post.data,
             timestamp=datetime.utcnow(),
-            author=g.user
+            author=g.user,
+            language=language
         )
         db.session.add(post)
         db.session.commit()
