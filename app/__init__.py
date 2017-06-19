@@ -56,6 +56,10 @@ lm.init_app(app)
 
 # tell lm the view function name
 lm.login_view = 'login'
+
+# if we call gettext() outside of a request it will just give us the default
+# text, which will be the English version. For cases like this, we have lazy_gettext()
+# which seach for a translation until the string is actually used.
 lm.login_message = lazy_gettext('Please log in to access this page.')
 
 oid = OpenID(app, os.path.join(basedir, 'tmp'))
