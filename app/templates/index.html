@@ -8,14 +8,14 @@
   {% endfor %}
 	<br>
 	{% if posts.has_prev %}
-	  <a href="{{ url_for('index', page=posts.prev_num) }}">{{ _('&lt;&lt; Newer posts') }}</a>
+	  <a href="{{ url_for('index', page=posts.prev_num) }}">&lt;&lt; {{ _('Newer posts') }}</a>
 	{% else %}
-	  {{ _('&lt;&lt; Newer posts') }}
+	  &lt;&lt; {{ _('Newer posts') }}
 	{% endif %} |
 	{% if posts.has_next %}
-	  <a href="{{ url_for('index', page=posts.next_num) }}">{{ _('Older posts &gt;&gt;') }}</a>
+	  <a href="{{ url_for('index', page=posts.next_num) }}">{{ _('Older posts') }} &gt;&gt;</a>
 	{% else %}
-	  {{ _('Older posts &gt;&gt;') }}
+	  {{ _('Older posts') }} &gt;&gt;
 	{% endif %}
 	<hr>
 	<form action='' method='post' name='post'>
