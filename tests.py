@@ -3,9 +3,14 @@ import os
 import unittest
 from datetime import datetime, timedelta
 
+from coverage import coverage
+
 from config import basedir
 from app import app, db
 from app.models import User, Post
+
+cov = coverage(branch=True, omit=['flask/*', 'tests.py'])
+cov.start()
 
 class TestCase(unittest.TestCase):
     # setUp and tearDown methods run before and after each test respectively.
@@ -112,5 +117,30 @@ class TestCase(unittest.TestCase):
         assert f3 == [p4, p3]
         assert f4 == [p4]
 
+    def test_delete_post(self):
+        # create a user and a post
+        u = User(nickname='john', email='john@example.com')
+        p = Post(body='test post', author=u, timestamp=datetime.utcnow())
+        db.session.add(u)
+        db.session.add(p)
+        db.session.commit()
+        # query the post and dextroy the session
+        p = Post.query.get(1)
+        db.session.remove()
+        # delete the post using a new session
+        db.session = db.create_scoped_session()
+        db.session.delete(p)
+        db.session.commit()
+
 if __name__ == '__main__':
-    unittest.main()
+    try:
+        unittest.main()
+    except:
+        pass
+    cov.stop()
+    cov.save()
+    print('\n\nCoverage Report:\n')
+    cov.report()
+    print("HTML version: " + os.path.join(basedir, 'tmp/coverage/index.html'))
+    cov.html_report(directory='tmp/coverage')
+    cov.erase()
