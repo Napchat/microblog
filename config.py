@@ -47,3 +47,8 @@ LANGUAGES = {
     'en': 'English',
     'es': 'Español'
 }
+
+SQLALCHEMY_RECORD_QUERIES = True
+
+# slow database query threshold (in seconds)
+DATABSE_QUERY_TIMEOUT = 0.5
