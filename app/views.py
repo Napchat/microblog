@@ -16,11 +16,13 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_babel import gettext
 from guess_language import guessLanguage
+import flask_profiler
+from flask_sqlalchemy import get_debug_queries
 
 from app import app, db, lm, oid, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
-from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES, DATABSE_QUERY_TIMEOUT
 from .emails import follower_notification
 
 # the function that is marked with the ``localeselector`` decorator will be
@@ -238,3 +240,28 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results)
+
+@app.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    post = Post.query.get(id)
+    if post is None:
+        flash('Post is not found')
+        return redirect(url_for('index'))
+    if post.author.id != g.user.id:
+        flash('You cannot delete this post.')
+        return redirect(url_for('index'))
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted.')
+    return redirect(url_for('index'))
+
+@app.after_request
+def after_request(response):
+    for query in get_debug_queries():
+        if query.duration >= DATABSE_QUERY_TIMEOUT:
+            app.logger.warning('SLOW QUERY: %s\nParameters: %s\Duration: %fs\nContext: %s\n' % \
+                (query.statement, query.parameters, query.duration, query.context))
+    return response
+
+flask_profiler.init_app(app)
