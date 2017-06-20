@@ -6,12 +6,18 @@
     <td>
       <!--<a href="{{ url_for('user', nickname=post.author.nickname) }}">{{ post.author.nickname}}</a>
     said {{ momentjs(post.timestamp).fromNow() }}:-->
-    <p>{% autoescape false %}
-        {{ _('%(nickname)s said %(when)s:', nickname='<a href="%s">%s</a>' % (url_for('user', nickname=post.author.nickname), post.author.nickname), when=momentjs(post.timestamp).fromNow()) }}
-      {% endautoescape %}
-      {% if post.language != None and post.language != '' and post.language != g.locale %}
-      | <a href='#'>{{ _('Translate') }}</a>
-      {% endif %}</p>
+      <p>
+        {% autoescape false %}
+          {{ _('%(nickname)s said %(when)s:', nickname='<a href="%s">%s</a>' % (url_for('user', nickname=post.author.nickname), post.author.nickname), when=momentjs(post.timestamp).fromNow()) }}
+        {% endautoescape %}
+        {% if post.language != None and post.language != '' and post.language != g.locale %}
+          | <a href='#'>{{ _('Translate') }}</a>
+        {% endif %}
+        {% if post.user_id == g.user.id %}
+          | <a href="{{ url_for('delete', id=post.id) }}">{{ _('Delete') }}</a>
+          | <a href='@'>{{ _('Edit') }}</a>
+        {% endif %}
+      </p>
       <p>{{ post.body }}</p>
     </td>
   </tr>
