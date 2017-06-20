@@ -82,7 +82,7 @@ class User(db.Model):
         return 'https://gravatar.com/avatar/%s?d=mm&s=%d' % \
                (md5(self.email.encode('utf-8')).hexdigest(), size)
 
-    def __repr__(self):
+    def __repr__(self):  # pragma: no cover
         '''This method tells Python how to print objects of
         this class.
         '''
