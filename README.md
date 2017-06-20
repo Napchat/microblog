@@ -14,12 +14,13 @@ extensions:
 -----------------------
 1. Flask-WhooshAlchemy: It integrates a Whoosh database with Flask_SQLAlchemy models, we use the extension to implement our text searching.
 2. Flask-WTF: Forms
-3. Flask-Login: Login sys
+3. Flask-Login: Login system
 4. Flask-OpenID: OpenID server
 5. sqlalchemy-migrate: database migration 
 6. Flask-Babel: l18n and L10n, to translate application into different language
-7. coverage:
+7. coverage: a test coverage tool can observe a running applicaiton and take note of which lines of code execute and which do not.
 8. guess-language: for client-server translating function
-9. Flask-Mail:
-10. Flask-SQLAlchemy:
+9. Flask-Mail: mail server.
+10. Flask-SQLAlchemy: our database management.
 11. flipflop:
+12. flask_profiler: for profiling.
