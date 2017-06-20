@@ -38,6 +38,22 @@ from .momentjs import momentjs
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.config['DEBUG'] = True
+app.config['flask_profiler'] = {
+    'enabled': app.config['DEBUG'],
+    'storage': {
+        'engine': 'sqlite'
+    },
+    'basicAuth': {
+        'enabled': True,
+        'username': 'napchat',
+        'password': '2291277'
+    },
+    'ignore': [
+        '/static/*'
+        'flask/*'
+    ]
+}
 
 # this tells jinja2 to expose our class as a global variable to all templates.
 app.jinja_env.globals['momentjs'] = momentjs
@@ -73,7 +89,6 @@ if not app.debug:
     file_handler.setLevel(logging.INFO)
     app.logger.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
-    app.logger.info('microblog startup')
+    app.logger.info('Microblog start app.debug = %s' % app.debug)
 
 from app import views, models
-
