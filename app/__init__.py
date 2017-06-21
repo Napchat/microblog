@@ -36,8 +36,9 @@ from flask_babel import Babel, lazy_gettext
 from config import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
 from .momentjs import momentjs
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
+app.config.from_pyfile('application.cfg', silent=True)
 app.config['DEBUG'] = True
 app.config['flask_profiler'] = {
     'enabled': app.config['DEBUG'],
@@ -82,13 +83,30 @@ oid = OpenID(app, os.path.join(basedir, 'tmp'))
 
 if not app.debug:
     import logging
-    from logging.handlers import RotatingFileHandler
+    from logging.handlers import RotatingFileHandler, SMTPHandler
+    # error mail
+    mail_handler = SMTPHandler('127.0.0.1', 'wozhendeaiwoa@gmail.com', \
+                               ADMINS, 'YourApplication Failed', credentials=(MAIL_USERNAME, MAIL_PASSWORD))
+    mail_handler.setFormatter(Formatter('''
+        Message type:         %(levelname)s
+        Location:             %(pathname)s:%(lineno)d
+        Module:               %(module)s
+        Function:             %(funcName)s
+        Time:                 %(asctime)s
+
+        Message:
+
+        %(message)s
+    '''))
+    mail_handler.setLevel(logging.ERROR)
+    # error file
     file_handler = RotatingFileHandler('tmp/microblog.log', 'a', 1*1024*1024, 10)
     file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s \
                                                 [in %(pathname)s:%(lineno)d]'))
-    file_handler.setLevel(logging.INFO)
-    app.logger.setLevel(logging.INFO)
+    file_handler.setLevel(logging.WARNING)
+    app.logger.setLevel(logging.WARNING)
+    app.logger.addHandler(mail_handler)
     app.logger.addHandler(file_handler)
-    app.logger.info('Microblog start app.debug = %s' % app.debug)
+    #app.logger.info('Microblog start app.debug = %s in production mode.' % app.debug)
 
 from app import views, models

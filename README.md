@@ -3,9 +3,10 @@ a microblog developing using flask
 
 to-do list:
 -----------
+- use setuptools to configurate app.
+- Using Blueprint features to reconstruct.
 - Add OAuth authentication.
 - Add user/password anthentication system.
-- Using Blueprint features to reconstruct.
 - add one more many-to-many self-referential relationship to implement the block feature hidding the posts of users from users he have blocked.
 - add feature of grouping your followed users.
 - every posts have its own page. And you can edit them.

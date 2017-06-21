@@ -15,6 +15,9 @@ cov.start()
 class TestCase(unittest.TestCase):
     # setUp and tearDown methods run before and after each test respectively.
     def setUp(self):
+        # during setup the ``TESTING`` config flag is activated. What it does is disable the error 
+        # catching during request handling so that you get better error reports when performing 
+        # test requests against the application.
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
