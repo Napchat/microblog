@@ -7,18 +7,20 @@ from setuptools import setup
 here = os.path.abspath(os.path.dirname(__file__))
 
 requires = [
-    'Flask',
-    'Flask-Babel',
-    'Flask-Login',
-    'Flask-Mail',
-    'Flask-OpenID',
-    'Flask-SQLAlchemy',
-    'Flask-WhooshAlchemy>=0.8',
-    'Flask-WTF',
-    'flipflop',
-    'guess-language',
-    'coverage',
-    'sqlalchemy-migrate'
+    'Flask==0.10.1',
+    'Flask-Babel==0.11.2',
+    'Flask-HTTPAuth==3.2.3',
+    'Flask-Login==0.4.0',
+    'Flask-Mail==0.9.1',
+    'Flask-OpenID==1.2.5',
+    'Flask-Profiler==1.4',
+    'Flask-SQLAlchemy==1.0',
+    'Flask-WhooshAlchemy==0.8',
+    'Flask-WTF==0.14.2',
+    'flipflop==1.0',
+    'guess-language-spirit==0.5a4',
+    'coverage==4.4.1',
+    'sqlalchemy-migrate==0.11.0',
 ]
 
 packages = ['app']
