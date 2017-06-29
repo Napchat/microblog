@@ -1,0 +1,1 @@
+web: gunicorn run_debug:app --log-file -

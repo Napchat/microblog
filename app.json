@@ -1,0 +1,7 @@
+{
+  "name": "microblog",
+  "description": "An example of deploying Flask web app to Heroku.",
+  "image": "heroku/python",
+  "repository": "https://github.com/Napchat/microblog",
+  "keywords": ["python", "flask" ]
+}
