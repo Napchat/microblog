@@ -30,6 +30,8 @@ wheels/
 db_repository/
 tmp/
 *.mo
+.idea/
+.vscode/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
