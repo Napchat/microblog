@@ -9,9 +9,14 @@ from hashlib import md5
 import sys
 import re
 
-import flask_whooshalchemy as whooshalchemy
-
 from app import db, app
+from config import WHOOSH_ENABLED
+
+enable_search = WHOOSH_ENABLED
+if enable_search:
+    import flask_whooshalchemy as whooshalchemy
+
+
 
 followers = db.Table('followers', 
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -149,4 +154,5 @@ class Post(db.Model):
         return '<Post %r>' % (self.body)
 
 # To initialize the full text for models.
-whooshalchemy.whoosh_index(app, Post)
+if enable_search:
+    whooshalchemy.whoosh_index(app, Post)

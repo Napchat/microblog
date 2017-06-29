@@ -55,3 +55,5 @@ SQLALCHEMY_RECORD_QUERIES = True
 
 # slow database query threshold (in seconds)
 DATABSE_QUERY_TIMEOUT = 0.5
+
+WHOOSH_ENABLED = os.environ.get('HEROKU') is None
