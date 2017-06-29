@@ -1,4 +1,4 @@
-__title__ = 'microblog'
+__title__ = 'app'
 __description__ = 'A Flask based microblog.'
 __url__ = 'https://github.com/Napchat/microblog'
 __version__ = '1.0'

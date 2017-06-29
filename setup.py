@@ -44,6 +44,7 @@ setup(
     license=about['__license__'],
     zip_safe=False,
     install_requires=requires,
+    dependency_links=['https://bitbucket.org/spirit/guess_language/downloads/guess_language-spirit-0.5a4.tar.bz2'],
     classifiers=(
         'Development Status :: 1.0 - Production/Stable',
         'Intended Audience :: Developers',
