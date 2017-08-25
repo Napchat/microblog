@@ -1,5 +1,5 @@
 # microblog
-a microblog developing using flask, I have depoyed it on Heroku, you can go to https://flask-microblog-napchat.herokuapp.com/ and have a try :)
+It it a microblog developed using flask. I have depoyed it on Heroku, and you can go to https://flask-microblog-napchat.herokuapp.com/ and have a try :)
 
 to-do list:
 -----------
